@@ -103,12 +103,16 @@ app.use("/listings", listingRouter)
 app.use("/listings/:id/reviews", reviewRouter)
 app.use("/", userRouter)
 
-// Catch-all for unmatched routes (404)
-// app.use("*", (req, res, next) => {
-//     const err = new Error("Page Not Found");
-//     err.statusCode = 404;
-//     next(err);
-// });
+app.get("/", (req, res) => {
+    res.redirect("/listings");
+});
+
+// 404 handler
+app.use("*", (req, res, next) => {
+    const err = new Error("Page Not Found");
+    err.statusCode = 404;
+    next(err);
+});
 
 // Error handler
 app.use((err, req, res, next) => {

@@ -94,14 +94,15 @@ module.exports.deleteListing = async (req, res) => {
 }
 
 module.exports.filterByCategory = async (req, res) => {
-  const { category } = req.query;
-  
-  if (!category || category === "null") {
-    req.flash("error", "No category selected!");
-    return res.redirect("/listings");
+  const category = req.query.category;
+  try {
+      const listings = await Listing.find({
+          category: { $regex: new RegExp(`^${category}$`, "i") }
+      });
+      res.render("listings/index", { allListings: listings });
+  } catch (err) {
+      console.error(err);
+      res.redirect("/listings");
   }
-
-  const listings = await Listing.find({ category });
-  res.render("listings/index.ejs", { allListings: listings });
 };
 
