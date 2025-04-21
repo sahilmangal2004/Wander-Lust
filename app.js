@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate")
-const ExpressError = require("./utils/ExpressError.js")
+// const ExpressError = require("./utils/ExpressError.js")
 const flash = require("connect-flash")
 const passport = require("passport")
 const LocalSrategy = require("passport-local")
@@ -18,7 +18,6 @@ const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 
-app
 
 
 const port = process.env.PORT || 8080
@@ -32,17 +31,19 @@ const userRouter = require("./routes/user.js")
 
 const dbUrl = process.env.ATLASDB_URL;
 
+async function main() {
+    await mongoose.connect(dbUrl);
+}
+
 main()
     .then(() => {
         console.log("connected to DB");
     })
     .catch((err) => {
-        console.log(err);
+        console.log("error");
     });
 
-async function main() {
-    await mongoose.connect(dbUrl);
-}
+
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -78,9 +79,10 @@ const sessionOptions= {
         httpOnly: true
     },
 }
-// app.get("/", (req, res) => {
-//     res.send("Hi, I am root");
-// });
+
+// // app.get("/", (req, res) => {
+// //     res.send("Hi, I am root");
+// // });
 
 app.use(session(sessionOptions))
 app.use(flash())
@@ -99,8 +101,8 @@ app.use((req, res, next) => {
     next()
 })
 
-app.use("/listings", listingRouter)
 app.use("/listings/:id/reviews", reviewRouter)
+app.use("/listings", listingRouter)
 app.use("/", userRouter)
 
 app.get("/", (req, res) => {
@@ -108,10 +110,11 @@ app.get("/", (req, res) => {
 });
 
 // 404 handler
-app.use("*", (req, res, next) => {
+app.use((req, res, next) => {
     const err = new Error("Page Not Found");
     err.statusCode = 404;
     next(err);
+    // res.send("error occured")
 });
 
 // Error handler
