@@ -216,6 +216,43 @@ body{
     #map {
         height: 250px;
     }
+
+    /* Fix search bar and nav layout */
+    .search-bar-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .search-input {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .search-button {
+        width: 100%;
+    }
+
+    .explore-categories {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .explore-category {
+        flex: 1 1 40%;
+        text-align: center;
+    }
+
+    /* Fix "Sign Up / Log In" section */
+    .auth-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 1rem;
+    }
 }
 
 /* Very small devices */

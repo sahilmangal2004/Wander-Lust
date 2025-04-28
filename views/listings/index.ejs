@@ -23,6 +23,13 @@
 
     .tax-info {
         display: none;
+        transition: opacity 0.3s ease;
+        opacity: 0;
+    }
+
+    .tax-info.show {
+        display: inline;
+        opacity: 1;
     }
 
     .tax-toggle {
@@ -57,33 +64,33 @@
         <p>Mountains</p>
     </div>
 
-    <div class="filter">
-        <div><i class="fa-brands fa-fort-awesome" data-category="castles"> </i></div>
+    <div class="filter" data-category="castles">
+        <div><i class="fa-brands fa-fort-awesome"> </i></div>
         <p>Castles</p>
     </div>
 
-    <div class="filter">
-        <div><i class="fa-solid fa-snowman" data-category="arctic"></i></div>
+    <div class="filter" data-category="arctic">
+        <div><i class="fa-solid fa-snowman"></i></div>
         <p>Arctic</p>
     </div>
 
-    <div class="filter">
-        <div><i class="fa-solid fa-tractor" data-category="farms"></i></div>
+    <div class="filter" data-category="farms">
+        <div><i class="fa-solid fa-tractor"></i></div>
         <p>Farms</p>
     </div>
 
-    <div class="filter">
-        <div><i class="fa-solid fa-campground" data-category="camping"></i></div>
+    <div class="filter" data-category="camping">
+        <div><i class="fa-solid fa-campground"></i></div>
         <p>Camping</p>
     </div>
 
-    <div class="filter">
-        <div><i class="fa-solid fa-igloo" data-category="dome"></i></div>
+    <div class="filter" data-category="dome">
+        <div><i class="fa-solid fa-igloo"></i></div>
         <p>Dome</p>
     </div>
 
-    <div class="filter">
-        <div><i class="fa-solid fa-ship" data-category="ship"></i></div>
+    <div class="filter" data-category="ship">
+        <div><i class="fa-solid fa-ship"></i></div>
         <p>Ship</p>
     </div>
 
@@ -126,13 +133,8 @@
     let taxSwitch = document.getElementById("switchCheckDefault")
     taxSwitch.addEventListener("click", () => {
         let taxInfo = document.getElementsByClassName("tax-info")
-        for (info of taxInfo) {
-            if (info.style.display != "inline") {
-                info.style.display = "inline";
-            } else {
-                info.style.display = "none";
-            }
-
+        for (let info of taxInfo) {
+            info.classList.toggle("show");
         }
     })
 
